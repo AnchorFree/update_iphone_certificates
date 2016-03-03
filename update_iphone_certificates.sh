@@ -10,6 +10,7 @@ fi
 TMPDIR=$(mktemp -d -t new_iphone_certificates.XXXXXXXXXXXXXXXX)
 echo "Created TMPDIR=$TMPDIR"
 
+updated_certificates=""
 for certificate_zip in $zip_dir/*; do
   certificate_basename="${certificate_zip##*/}"
   certificate_filename="${certificate_basename%.zip}"
@@ -24,7 +25,9 @@ for certificate_zip in $zip_dir/*; do
   cat "$certificate_dir"/*.ca-bundle >> "$certificate_dir/v4.crt"
   rm "$certificate_dir"/*.ca-bundle
   mv "$certificate_dir" "$TMPDIR/$certificate_name"
+  updated_certificates="$updated_certificates|$certificate_name"
 done
+updated_certificates=${updated_certificates#|}
 
 tarball="$TMPDIR.tar.bz2"
 echo "Creating $tarball"
@@ -51,3 +54,7 @@ else
   rm -f "$tarball"
   ssh salt "sudo rm -f /tmp/${tarball##*/}"
 fi
+
+remote_salt_command="sudo salt --state-out=terse --timeout=60 --hide-timeout -I 'inventory:iphone_cert:($updated_certificates)' state.sls hss.iphone_certs"
+echo "Running remote salt command: $remote_salt_command"
+ssh salt "$remote_salt_command"

@@ -22,3 +22,4 @@ Then
 - upload that tarball to the salt master
 - as root, extract that tarball in /srv/private/iphone_certificates
 - clean up the tarball both locally and on the salt-master
+- use salt to update these certificates on the appropriate hss servers
