@@ -55,7 +55,7 @@ else
 fi
 
 for updated_certificate in $updated_certificates; do
-  remote_salt_command="sudo salt --state-out=terse --timeout=60 --hide-timeout -I 'inventory:iphone_cert:$updated_certificate' state.sls hss.iphone_certs queue=True"
+  remote_salt_command="sudo salt --state-out=terse --timeout=60 --hide-timeout -I 'inventory:iphone_cert:$updated_certificate' state.sls hss.strongswan queue=True"
   echo "Running remote salt command: $remote_salt_command"
   ssh salt "$remote_salt_command"
 done
