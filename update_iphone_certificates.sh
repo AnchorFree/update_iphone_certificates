@@ -17,7 +17,7 @@ for certificate_zip in $zip_dir/*; do
   certificate_dir=$(mktemp -d -t $certificate_filename)
   echo "Extracting $certificate_zip to $certificate_dir"
   unzip -d "$certificate_dir" "$certificate_zip"
-  key_filename=$(echo "$certificate_dir"/*.key)
+  key_filename=$(echo "$certificate_dir"/*.crt)
   key_basename="${key_filename##*/}"
   certificate_name="${key_basename%.key}"
   mv "$certificate_dir"/*.key "$certificate_dir/v4.key"
