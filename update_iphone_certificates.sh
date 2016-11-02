@@ -19,7 +19,7 @@ for certificate_zip in $zip_dir/*; do
   unzip -d "$certificate_dir" "$certificate_zip"
   crt_filename=$(echo "$certificate_dir"/*.crt)
   key_basename="${crt_filename##*/}"
-  certificate_name="${key_basename%.crt}"
+  certificate_name=$(echo "${key_basename%.crt}" | perl -lpe 's/_/./og')
   mv "$certificate_dir"/*.key "$certificate_dir/v4.key"
   mv "$certificate_dir"/*.crt "$certificate_dir/v4.crt"
   cat "$certificate_dir"/*.ca-bundle >> "$certificate_dir/v4.crt"
