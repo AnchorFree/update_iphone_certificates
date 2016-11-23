@@ -44,7 +44,7 @@ scp "$tarball" salt:/tmp
 
 echo "Extracting on salt master"
 # BSD tar generates a tarball full of junk keywords. Ignore them when extracting.
-ssh salt "sudo tar --warning=no-unknown-keyword --directory /srv/private/iphone_certificates -xf /tmp/${tarball##*/}"
+ssh salt "sudo tar --no-same-owner --warning=no-unknown-keyword --directory /srv/private/iphone_certificates -xf /tmp/${tarball##*/}; sudo chown -R root:root /srv/private/iphone_certificates; sudo chmod -R og-rwx /srv/private/iphone_certificates"
 
 if [ ! -z ${keep_tarball} ]; then
   echo "Leaving $tarball"
