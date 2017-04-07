@@ -1,5 +1,7 @@
 #! /bin/bash
 
+TAR=gtar
+
 zip_dir=${zip_dir:-"$HOME/new_iphone_certificates"}
 
 if [ ! -d "$zip_dir" ]; then
@@ -30,7 +32,7 @@ done
 
 tarball="$TMPDIR.tar.bz2"
 echo "Creating $tarball"
-COPYFILE_DISABLE=1 BZIP=--best tar --create -j --file "$tarball" --directory "$TMPDIR" .
+COPYFILE_DISABLE=1 BZIP=--best $TAR --create -j --file "$tarball" --directory "$TMPDIR" .
 
 if [ ! -z ${keep_tempdir+x} ]; then
   echo "Leaving TMPDIR"

@@ -4,6 +4,8 @@ update_iphone_certificates
 Create a directory with all your new iphone certificate zip files in it.
 By default $HOME/new_iphone_certificates and then run update_iphone_certificates.sh
 
+Install gtar (GNU Tar) using `brew install gnu-tar`
+
 How it works
 ------------
 
